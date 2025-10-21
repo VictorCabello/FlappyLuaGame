@@ -12,28 +12,28 @@ function love.load()
     PipeSpaceHeight = 100
     PipeWidth = 54
 
-    local function resetPipe()
+    function newPipeSpaceY()
         local pipeSpaceYMin = 54
-        PipeSpaceY = love.math.random(
+        local pipeSpaceY = love.math.random(
             pipeSpaceYMin,
             PlayingAreaHeight - PipeSpaceHeight
         )
-        PipeX = PlayingAreaWidth
+        return pipeSpaceY
     end
-    resetPipe()
 
     Pipe1X = 100
-    Pipe1SpaceY = 100
+    Pipe1SpaceY = newPipeSpaceY()
 
     Pipe2X = 200
-    Pipe2SpaceY = 200
+    Pipe2SpaceY = newPipeSpaceY()
 end
 
 function love.update(dt)
     BirdYSpeed = BirdYSpeed + ( 515 * dt)
     BirdY = BirdY + (BirdYSpeed * dt)
-    PipeX = PipeX - (60 * dt)
 
+    --[[
+    PipeX = PipeX - (60 * dt)
     if
         BirdX < (PipeX + PipeWidth)
         and
@@ -47,16 +47,28 @@ function love.update(dt)
 
         love.load()
     end
+    --]]
 end
 
 function DrawBackground()
     love.graphics.setColor(.14, .36, .46)
-    love.graphics.rectangle('fill', 0, 0, PlayingAreaWidth, PlayingAreaHeight)
+    love.graphics.rectangle(
+        'fill',
+        0,
+        0,
+        PlayingAreaWidth,
+        PlayingAreaHeight
+    )
 end
 
 function DrawBrind()
     love.graphics.setColor(.87, .84, .27)
-    love.graphics.rectangle('fill', BirdX, BirdY, BirdWidth, BirdHeight)
+    love.graphics.rectangle('fill',
+		BirdX,
+		BirdY,
+		BirdWidth,
+		BirdHeight
+    )
 end
 
 function DrawPipes()
@@ -94,4 +106,8 @@ function love.keypressed()
     if BirdY > 0 then
         BirdYSpeed = -165
     end
+
+    -- temporaly
+    Pipe1SpaceY = newPipeSpaceY()
+    Pipe2SpaceY = newPipeSpaceY()
 end
