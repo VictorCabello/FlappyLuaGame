@@ -1,11 +1,3 @@
-function resetPipe()
-    local pipeSpaceYMin = 54
-    PipeSpaceY = love.math.random(
-        pipeSpaceYMin,
-        PlayingAreaHeight - PipeSpaceHeight
-    )
-    PipeX = PlayingAreaWidth
-end
 
 function love.load()
     BirdY = 200
@@ -19,7 +11,22 @@ function love.load()
 
     PipeSpaceHeight = 100
     PipeWidth = 54
+
+    local function resetPipe()
+        local pipeSpaceYMin = 54
+        PipeSpaceY = love.math.random(
+            pipeSpaceYMin,
+            PlayingAreaHeight - PipeSpaceHeight
+        )
+        PipeX = PlayingAreaWidth
+    end
     resetPipe()
+
+    Pipe1X = 100
+    Pipe1SpaceY = 100
+
+    Pipe2X = 200
+    Pipe2SpaceY = 200
 end
 
 function love.update(dt)
@@ -53,24 +60,28 @@ function DrawBrind()
 end
 
 function DrawPipes()
+    local function drawPipe(pipeX, pipeSpaceY)
+        love.graphics.setColor(.37, .82, .28)
 
-    love.graphics.setColor(.37, .82, .28)
+        love.graphics.rectangle(
+            'fill',
+            pipeX,
+            0,
+            PipeWidth,
+            pipeSpaceY
+        )
 
-    love.graphics.rectangle(
-        'fill',
-        PipeX,
-        0,
-        PipeWidth,
-        PipeSpaceY
-    )
+        love.graphics.rectangle(
+            'fill',
+            pipeX,
+            PipeSpaceHeight + pipeSpaceY,
+            PipeWidth,
+            PlayingAreaHeight - PipeSpaceHeight - pipeSpaceY
+        )
+    end
 
-    love.graphics.rectangle(
-        'fill',
-        PipeX,
-        PipeSpaceHeight + PipeSpaceY,
-        PipeWidth,
-        PlayingAreaHeight - PipeSpaceHeight - PipeSpaceY
-    )
+    drawPipe(Pipe1X, Pipe1SpaceY)
+    drawPipe(Pipe2X, Pipe2SpaceY)
 end
 
 function love.draw()
