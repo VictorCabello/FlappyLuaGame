@@ -1,7 +1,3 @@
--- https://berbasoft.com/simplegametutorials/love/bird/
--- Me quede en "Colliding with the top pipe segment"
-
-
 function resetPipe()
     local pipeSpaceYMin = 54
     PipeSpaceY = love.math.random(
@@ -13,6 +9,8 @@ end
 
 function love.load()
     BirdY = 200
+    BirdX = 62
+    BirdWidth = 30
     BirdYSpeed = 0
 
     PlayingAreaWidth = 300
@@ -28,8 +26,15 @@ function love.update(dt)
     BirdY = BirdY + (BirdYSpeed * dt)
     PipeX = PipeX - (60 * dt)
 
-    if (PipeX + PipeWidth) < 0 then
-        resetPipe()
+    if
+        BirdX < (PipeX + PipeWidth)
+        and
+        (BirdX + BirdWidth) > PipeX
+        and
+        BirdY < PipeSpaceY
+    then
+
+        love.load()
     end
 end
 
@@ -40,7 +45,7 @@ end
 
 function DrawBrind()
     love.graphics.setColor(.87, .84, .27)
-    love.graphics.rectangle('fill', 62, BirdY, 30, 25)
+    love.graphics.rectangle('fill', BirdX, BirdY, BirdWidth, 25)
 end
 
 function DrawPipes()
@@ -70,9 +75,8 @@ function love.draw()
     DrawPipes()
 end
 
-function love.keypressed(key)
+function love.keypressed()
     if BirdY > 0 then
         BirdYSpeed = -165
-        love.load()
     end
 end
