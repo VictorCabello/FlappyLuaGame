@@ -11,6 +11,7 @@ function love.load()
     BirdY = 200
     BirdX = 62
     BirdWidth = 30
+    BirdHeight = 25
     BirdYSpeed = 0
 
     PlayingAreaWidth = 300
@@ -30,8 +31,11 @@ function love.update(dt)
         BirdX < (PipeX + PipeWidth)
         and
         (BirdX + BirdWidth) > PipeX
-        and
-        BirdY < PipeSpaceY
+        and (
+            BirdY < PipeSpaceY
+            or
+            (BirdY + BirdHeight) > (PipeSpaceY + PipeSpaceHeight)
+        )
     then
 
         love.load()
@@ -45,7 +49,7 @@ end
 
 function DrawBrind()
     love.graphics.setColor(.87, .84, .27)
-    love.graphics.rectangle('fill', BirdX, BirdY, BirdWidth, 25)
+    love.graphics.rectangle('fill', BirdX, BirdY, BirdWidth, BirdHeight)
 end
 
 function DrawPipes()
