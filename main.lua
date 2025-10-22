@@ -1,3 +1,4 @@
+local love = require("love")
 
 function love.load()
     BirdY = 200
@@ -67,6 +68,10 @@ function love.update(dt)
 
         love.load()
     end
+
+    if BirdX > (Pipe1X + PipeWidth) then
+        Score = Score + 1
+    end
 end
 
 function DrawBackground()
@@ -128,8 +133,4 @@ function love.keypressed()
     if BirdY > 0 then
         BirdYSpeed = -165
     end
-
-    -- temporaly
-    Pipe1SpaceY = newPipeSpaceY()
-    Pipe2SpaceY = newPipeSpaceY()
 end
