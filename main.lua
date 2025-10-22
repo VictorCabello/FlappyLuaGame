@@ -58,10 +58,9 @@ function love.update(dt)
         )
     end
 
-    if
-        isBirdCollidingWithPipe(Pipe1X, Pipe1SpaceY)
-        or
-        isBirdCollidingWithPipe(Pipe2X, Pipe2SpaceY)
+    if isBirdCollidingWithPipe(Pipe1X, Pipe1SpaceY)
+        or isBirdCollidingWithPipe(Pipe2X, Pipe2SpaceY)
+        or BirdY > PlayingAreaHeight
     then
 
         love.load()
