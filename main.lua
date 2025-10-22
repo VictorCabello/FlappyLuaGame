@@ -1,11 +1,9 @@
 local love = require("love")
 
 function love.load()
-    BirdY = 200
     BirdX = 62
     BirdWidth = 30
     BirdHeight = 25
-    BirdYSpeed = 0
 
     PlayingAreaWidth = 300
     PlayingAreaHeight = 388
@@ -22,14 +20,19 @@ function love.load()
         return pipeSpaceY
     end
 
-    Pipe1X = PlayingAreaWidth
-    Pipe1SpaceY = newPipeSpaceY()
+    function reset()
+        BirdY = 200
+        BirdYSpeed = 0
+        Pipe1X = PlayingAreaWidth
+        Pipe1SpaceY = newPipeSpaceY()
 
-    Pipe2X = PlayingAreaWidth + ((PlayingAreaWidth + PipeWidth)/2)
-    Pipe2SpaceY = newPipeSpaceY()
+        Pipe2X = PlayingAreaWidth + ((PlayingAreaWidth + PipeWidth)/2)
+        Pipe2SpaceY = newPipeSpaceY()
 
-    Score = 0
-    UpcomingPipe = 1
+        Score = 0
+        UpcomingPipe = 1
+    end
+    reset()
 end
 
 function love.update(dt)
