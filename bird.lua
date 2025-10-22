@@ -1,3 +1,4 @@
+local love = require "love"
 local M = {
     defaults = {
         x = 62,
@@ -8,6 +9,8 @@ local M = {
     }
 }
 
+-- Setup function to initialize or update bird properties
+-- @param opts tables with properties
 M.setup = function(self, opts)
     local function init(anOpts)
         for k, v in pairs(anOpts) do
