@@ -1,10 +1,9 @@
 local love = require("love")
+local bird = require("bird")
+
 
 function love.load()
-    BirdX = 62
-    BirdWidth = 30
-    BirdHeight = 25
-
+    bird:setup()
     PlayingAreaWidth = 300
     PlayingAreaHeight = 388
 
@@ -21,8 +20,7 @@ function love.load()
     end
 
     function reset()
-        BirdY = 200
-        BirdYSpeed = 0
+        bird:reset()
         Pipe1X = PlayingAreaWidth
         Pipe1SpaceY = newPipeSpaceY()
 
@@ -36,8 +34,7 @@ function love.load()
 end
 
 function love.update(dt)
-    BirdYSpeed = BirdYSpeed + ( 515 * dt)
-    BirdY = BirdY + (BirdYSpeed * dt)
+    bird:update(dt)
 
     local function movePipe(pipeX, pipeSpaceY)
         pipeX = pipeX - (60 * dt)
@@ -53,21 +50,20 @@ function love.update(dt)
     Pipe1X, Pipe1SpaceY = movePipe(Pipe1X, Pipe1SpaceY)
     Pipe2X, Pipe2SpaceY = movePipe(Pipe2X, Pipe2SpaceY)
 
-    local function isBirdCollidingWithPipe(pipeX, pipeSpaceY)
-        return
-        BirdX < (pipeX + PipeWidth)
+    local function isbirdCollidingWithPipe(pipeX, pipeSpaceY)
+        return bird.x < (pipeX + PipeWidth)
         and
-        (BirdX + BirdWidth) > pipeX
+        (bird.x + bird.width) > pipeX
         and (
-            BirdY < pipeSpaceY
+            bird.y < pipeSpaceY
             or
-            (BirdY + BirdHeight) > (pipeSpaceY + PipeSpaceHeight)
+            (bird.y + bird.height) > (pipeSpaceY + PipeSpaceHeight)
         )
     end
 
-    if isBirdCollidingWithPipe(Pipe1X, Pipe1SpaceY)
-        or isBirdCollidingWithPipe(Pipe2X, Pipe2SpaceY)
-        or BirdY > PlayingAreaHeight
+    if isbirdCollidingWithPipe(Pipe1X, Pipe1SpaceY)
+        or isbirdCollidingWithPipe(Pipe2X, Pipe2SpaceY)
+        or bird.y > PlayingAreaHeight
     then
 
         love.load()
@@ -75,7 +71,7 @@ function love.update(dt)
 
     local function updateScoreAndClosestPipe(thispipe, pipeX, otherPipe)
         if UpcomingPipe == thispipe
-            and (BirdX > (pipeX + PipeWidth))
+            and (bird.x > (pipeX + PipeWidth))
         then
             Score = Score + 1
             UpcomingPipe = otherPipe
@@ -96,15 +92,6 @@ function DrawBackground()
     )
 end
 
-function DrawBrind()
-    love.graphics.setColor(.87, .84, .27)
-    love.graphics.rectangle('fill',
-		BirdX,
-		BirdY,
-		BirdWidth,
-		BirdHeight
-    )
-end
 
 function DrawPipes()
     local function drawPipe(pipeX, pipeSpaceY)
@@ -136,12 +123,10 @@ end
 
 function love.draw()
     DrawBackground()
-    DrawBrind()
+    bird:draw()
     DrawPipes()
 end
 
 function love.keypressed()
-    if BirdY > 0 then
-        BirdYSpeed = -165
-    end
+    bird:jump()
 end
