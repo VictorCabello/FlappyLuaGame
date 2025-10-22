@@ -29,6 +29,7 @@ function love.load()
     Pipe2SpaceY = newPipeSpaceY()
 
     Score = 0
+    UpcomingPipe = 1
 end
 
 function love.update(dt)
@@ -69,9 +70,16 @@ function love.update(dt)
         love.load()
     end
 
-    if BirdX > (Pipe1X + PipeWidth) then
-        Score = Score + 1
+    local function updateScoreAndClosestPipe(thispipe, pipeX, otherPipe)
+        if UpcomingPipe == thispipe
+            and (BirdX > (pipeX + PipeWidth))
+        then
+            Score = Score + 1
+            UpcomingPipe = otherPipe
+        end
     end
+    updateScoreAndClosestPipe(1, Pipe1X, 2)
+    updateScoreAndClosestPipe(2, Pipe2X, 1)
 end
 
 function DrawBackground()
