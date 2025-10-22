@@ -32,8 +32,21 @@ function love.update(dt)
     BirdYSpeed = BirdYSpeed + ( 515 * dt)
     BirdY = BirdY + (BirdYSpeed * dt)
 
+    local function movePipe(pipeX, pipeSpaceY)
+        pipeX = pipeX - (60 * dt)
+
+        if (pipeX + PipeWidth) > 0 then
+            pipeX = PlayingAreaWidth
+            pipeSpaceY = newPipeSpaceY()
+        end
+
+        return pipeX, pipeSpaceY
+    end
+
+    Pipe1X, Pipe1SpaceY = movePipe(Pipe1X, Pipe1SpaceY)
+    Pipe2X, Pipe2SpaceY = movePipe(Pipe2X, Pipe2SpaceY)
+
     --[[
-    PipeX = PipeX - (60 * dt)
     if
         BirdX < (PipeX + PipeWidth)
         and
