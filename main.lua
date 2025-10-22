@@ -21,10 +21,10 @@ function love.load()
         return pipeSpaceY
     end
 
-    Pipe1X = 100
+    Pipe1X = PlayingAreaWidth
     Pipe1SpaceY = newPipeSpaceY()
 
-    Pipe2X = 200
+    Pipe2X = PlayingAreaWidth + ((PlayingAreaWidth + PipeWidth)/2)
     Pipe2SpaceY = newPipeSpaceY()
 end
 
