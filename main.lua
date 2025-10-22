@@ -35,7 +35,7 @@ function love.update(dt)
     local function movePipe(pipeX, pipeSpaceY)
         pipeX = pipeX - (60 * dt)
 
-        if (pipeX + PipeWidth) > 0 then
+        if (pipeX + PipeWidth) < 0 then
             pipeX = PlayingAreaWidth
             pipeSpaceY = newPipeSpaceY()
         end
