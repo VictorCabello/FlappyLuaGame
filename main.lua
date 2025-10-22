@@ -46,21 +46,26 @@ function love.update(dt)
     Pipe1X, Pipe1SpaceY = movePipe(Pipe1X, Pipe1SpaceY)
     Pipe2X, Pipe2SpaceY = movePipe(Pipe2X, Pipe2SpaceY)
 
-    --[[
-    if
-        BirdX < (PipeX + PipeWidth)
+    local function isBirdCollidingWithPipe(pipeX, pipeSpaceY)
+        return
+        BirdX < (pipeX + PipeWidth)
         and
-        (BirdX + BirdWidth) > PipeX
+        (BirdX + BirdWidth) > pipeX
         and (
-            BirdY < PipeSpaceY
+            BirdY < pipeSpaceY
             or
-            (BirdY + BirdHeight) > (PipeSpaceY + PipeSpaceHeight)
+            (BirdY + BirdHeight) > (pipeSpaceY + PipeSpaceHeight)
         )
+    end
+
+    if
+        isBirdCollidingWithPipe(Pipe1X, Pipe1SpaceY)
+        or
+        isBirdCollidingWithPipe(Pipe2X, Pipe2SpaceY)
     then
 
         love.load()
     end
-    --]]
 end
 
 function DrawBackground()
